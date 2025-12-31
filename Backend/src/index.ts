@@ -5,17 +5,17 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 const app = express();
-const port = process.env.PORT 
+const port = process.env.PORT
 
 // Security Headers (XSS)
 app.use(helmet());
 
 // Rate Limiting 
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, 
-    max: 100, 
-    standardHeaders: true, 
-    legacyHeaders: false, 
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
     message: "Too many requests from this IP, please try again later."
 });
 app.use(limiter);
@@ -29,4 +29,9 @@ app.get('/api/pastes/:id', getPaste);
 app.get('/p/:id', getPasteHtml);
 
 
-app.listen(port, () => console.log("Server started on port " + port))
+
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    app.listen(port, () => console.log("Server started on port " + port));
+}
+
+export default app;
