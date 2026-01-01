@@ -2,18 +2,18 @@ import express from "express";
 import { createPaste, healthCheck, getPaste, getPasteHtml } from "./controller";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 const app = express();
 const port = process.env.PORT
 
-app.use(cors({
-    origin: '*', 
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'x-test-now-ms']
-}));
-app.options('*', cors());
+app.use(cors()); 
+app.options('*', cors()); 
 
-// Rate Limiting 
+app.use(helmet({
+    crossOriginResourcePolicy: false, 
+}));
+
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
