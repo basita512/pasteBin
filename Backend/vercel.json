@@ -1,15 +1,10 @@
 {
   "version": 2,
-  "builds": [
+  "outputDirectory": "dist",
+  "rewrites": [
     {
-      "src": "index.js",
-      "use": "@now/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.js"
+      "source": "/(.*)",
+      "destination": "/dist/index.js"
     }
   ]
 }
