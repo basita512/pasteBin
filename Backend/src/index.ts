@@ -7,6 +7,13 @@ import rateLimit from "express-rate-limit";
 const app = express();
 const port = process.env.PORT
 
+app.use(cors({
+    origin: '*', 
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'x-test-now-ms']
+}));
+app.options('*', cors());
+
 // Security Headers (XSS)
 app.use(helmet());
 
@@ -20,7 +27,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(cors());
 app.use(express.json());
 
 app.get('/api/healthz', healthCheck);
